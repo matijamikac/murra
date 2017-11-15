@@ -1,0 +1,9 @@
+dj-database-url==0.4.2
+Django==1.10.6
+gunicorn==19.7.1
+whitenoise==3.3.1
+django-bootstrap-datepicker==1.2.3
+django-postman==3.5.1
+django-stdimage==2.4.2
+Pillow==4.2.1
+psycopg2==2.6.2
