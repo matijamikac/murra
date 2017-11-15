@@ -1,0 +1,88 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<script>
+$(document).ready(function() {
+    $('.datepicker').datepicker({
+      monthNames: ['Siječanj', 'Veljača', 'Ožujak', 'Travanj', 'Svibanj', 'Lipanj', 'Srpanj', 'Kolovoz', 'Rujan', 'Listopad', 'Studeni', 'Prosinac'],
+      dayNamesMin: ['Ne','Po','Ut','Sr','Če','Pe','Su'],
+      dateFormat: 'dd-mm-yy'
+    } );
+    
+});
+</script>
+<br>
+    <h4>Trenutna stanja</h4>
+
+    
+      
+    <form action="" method="get">
+      {% csrf_token %}
+     
+      {{ date_form.start_date.label_tag }} {{ date_form.start_date}} {{ date_form.end_date.label_tag }} {{ date_form.end_date}}
+      
+      <div class="form-group">
+        <input type="submit" value="Osvježi" class="btn btn-primary" />
+      </div>
+    </form>
+      {% if page_obj %}
+      <table class="table">
+  <thead>
+    <tr class="table_header">
+      <th width='15%'>Saldo generiran</th>
+      <th width='25%'>Metoda</th>
+      <th width='15%' align="right">ukupno generirano</th>
+      <th width='15%' align="right">Ukupno iskorišteno</th>
+      <th width='15%' align="right">Ostalo za iskoristiti</th>
+      <th width='15%' align="right">Dana do deprecijacije</th>
+     </tr>
+  </thead>
+  <tbody class="active">
+  {% for i in page_obj %}
+    <tr class="positive_balance_rows">
+      <th scope="row">{{ i.publish_date|date:'d.m.Y.' }}</th>
+      <td>{% if i.positivebalance_type == 1 %} nova:<a href="{% url 'offer-detail' i.offer_id %}">{{ i.offer.title }}</a>{% elif i.positivebalance_type == 2 %} auto:<a href="{% url 'transaction_complete' i.transaction.pk %}">{{i.transaction.offer.title}}</a>
+      {% else %} MURRA{% endif %}</td>
+      <td>{{i.value}}</td>
+      <td>{{ i.used }}</td>
+      <td>{{ i.charge}}</td>
+      <td>{% if i.charge != 0 %}{{ i.depreciation }} {% else %} 0 {% endif %} <div class="expand_sign"></div> </td>
+     </tr>
+{% for trans in i.transactions.all %}
+<tr class="balance_rows">
+      <th scope="row">{{ trans.date|date:'d.m.Y.' }}</th>
+      <td>{% if trans.balance_type == 1 %} MURRA-provizija {% elif trans.balance_type == 2 %} ažuriranje ponude:<a href="{% url 'offer-detail' trans.offer_id %}">{{trans.offer.title}}</a> {% elif trans.balance_type == 3 %} brisana ponuda: <a href="{% url 'offer-detail' trans.offer_id %}">{{trans.offer.title}}</a> {% else %} preuzimanje: <a href="{% url 'transaction_complete' trans.trans_id %}">{{trans.trans.offer.title}}</a>{% endif %}</td>
+      <td></td>
+      <td>{{ trans.value }}</td>
+      <td></td>
+      <td></td>
+     </tr>
+   {% endfor %}
+ {% endfor %}
+  </tbody>
+</table>
+
+      
+
+    {% else %}
+      <p>U označenom razdoblju nemate pozitivnih salda</p>
+    {% endif %}
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $(".balance_rows").hide();
+
+  $(".expand_sign").click(function(){
+    var clicked_row = $(this).parent().parent()
+    clicked_row.nextUntil(".positive_balance_rows").toggle();
+    clicked_row.nextUntil(".positive_balance_rows").last().toggleClass("last_balance_row");
+    clicked_row.toggleClass("first_balance_row");
+
+    $(this).toggleClass("minus_sign");
+  })
+
+});
+</script>       
+{% endblock %}
+
+

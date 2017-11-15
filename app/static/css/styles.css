@@ -1,0 +1,246 @@
+/*
+
+* {
+	border: 1px solid black;
+}
+*/
+h4 {background-color: #ecf2e1;}
+
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.logo {
+	margin-bottom: 30px;
+	margin-top: 20px;
+}
+
+.button_margin {
+	margin-top: 20px;
+}
+
+.user_instance {
+	margin-bottom: 10px;
+	background-color: #ecf2e1;
+}
+
+.offer_instance {
+	height: 150px;
+	border: 1px solid grey;
+	margin-bottom: 10px;
+	padding-left: 0;
+}
+
+.offerdetail_instance {
+	overflow: auto;
+	border: 1px solid grey;
+	margin-bottom: 10px;
+	padding-left: 0;
+}
+
+.list_pics {
+	margin-top: 10px;
+	margin-bottom: 10px;
+
+}
+.user_container { position: relative; top: 1px; height: 215px; }
+.user_profile_data { width: 50%; 
+					display:inline-block; 
+					margin: 0; 
+					list-style-type: none;
+					float: top; }
+
+
+
+.user_photo_container {display: inline-block; 
+						position: absolute;
+						top: 0px;}
+
+.userprofile_table {
+	border-collapse: separate;
+	border-spacing: 3px;
+}
+
+#balance_available {
+	background-color: #cae9aa;
+	border-radius: 7px;
+	color: blue; 
+	border: 1px solid grey;
+	font-style: bold;
+	text-align: center;
+	font-size: 1.6em;
+	padding: 1px;
+}
+
+#liability_available {
+	background-color: #ff9999;
+	border-radius: 7px;
+	border: 1px solid grey;
+	font-style: bold;
+	text-align: center;
+	font-size: 1.6em;
+	padding: 1px;
+}
+
+.userprofile_otherdata {
+	border-radius: 7px;
+	border: 1px solid grey;
+	font-style: bold;
+	text-align: center;
+	font-size: 1.6em;
+	padding: 1px;
+}
+
+.index_box {background-color: #ecf2e1; color: blue; }
+.balance_data {float: right;}
+.balance_list_item {width: 75%;}
+
+.table_header {background-color: #e6f9ff;}
+
+.offer_list_details {padding-top: 10px;}
+.user_details {padding-top: 10px;}
+
+td {padding-left: 10px;}
+
+.main_category {
+	border: 1px solid black;
+}
+
+.subcategory_list, .subcategory {
+	margin-left: 15px;
+	border: 1px solid black;
+}
+
+.final_category_list, .final_category {
+	margin-left: 30px;
+	border: 1px solid black;
+}
+
+.calculated_total {
+	width: 400px;
+	height: 46px;
+	border: 1px solid grey;
+	background-color: #cae9aa;
+	font-size: 20px;
+	color: blue;
+	border-radius: 7px;
+}
+
+.margin_center {
+	margin-top: 5px;
+}
+
+.no_margin_bottom {
+	display: inline-block;
+	position: relative;
+	bottom: 0px;
+}
+
+.list_items {
+	display: inline-block;
+	color: grey;
+	margin-right: 4px;
+	margin-left: 4px;
+	font-size: 12px;
+}
+
+.list_heading {
+	font-size: 18px;
+}
+
+.rating_background {
+	display: inline-block;
+	width: 32px;
+    height: 32px;
+    background-image: url('/static/images/stars.png');
+    background-size: 96px;
+}
+
+.rating_background_half {
+	display: inline-block;
+    background-image: url('/static/images/stars1.png');
+    width: 32px;
+    height: 32px;
+    background-size: 96px;
+     
+}
+
+.rating_background_empty {
+	background-position: -32px;
+}
+
+.rating_background_active {
+	background-position: +32px;
+}
+
+.rating_background > input {
+	height: 32px;
+	width: 32px;
+	-webkit-appearance:none;
+       -moz-appearance:none;
+            appearance:none;
+
+}
+
+.rating_background_small {
+	display: inline-block;
+	width: 100px;
+    height: 22px;
+    background-image: url('/static/images/small_stars.png');
+    background-size: 400px;
+}
+
+.rating_background_small_1{
+	background-position: 247px 226px;
+}
+
+.rating_background_small_2{
+	background-position: 247px 183px;
+}
+
+.rating_background_small_3{
+	background-position: 247px 140px;
+}
+
+.rating_background_small_4{
+	background-position: 247px 94px;
+}
+
+.rating_background_small_5{
+	background-position: 247px 50px;
+}
+
+.invisible {
+	width: 1px;
+		-webkit-appearance:none;
+       -moz-appearance:none;
+            appearance:none;
+}
+
+.ratings_list_item {
+	border: 1px solid grey;
+	margin-bottom: 5px;
+	width: 50%;
+	padding: 5px;
+}
+
+.expand_sign {
+	display: inline-block;
+	width: 19px;
+	height: 19px;
+	background-image: url('/static/images/plus.png');
+	float: right;
+	background-position: -30px -28px;
+	
+}
+.minus_sign {
+	background-position: -30px -53px;
+}
+
+.balance_rows {border-left: 2px solid grey; border-right: 2px solid grey;}
+.first_balance_row {border: 2px solid grey;}
+.last_balance_row {
+	border-bottom: 2px solid grey;
+}

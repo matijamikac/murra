@@ -1,0 +1,21 @@
+<div class="user_profile_data">
+  <ul class="list-group">
+    
+    <li class="list-group-item"><strong>Korisnik:</strong> {{ user_profile.first_name }} {{ user_profile.last_name }}</li>
+    <li class="list-group-item"><strong>Adresa:</strong> {{ user_profile.address }}</li>
+     <li class="list-group-item"><strong>Mjesto</strong> {{ user_profile.town }}</li>
+     <li class="list-group-item"><strong>Telefon</strong> {{ user_profile.phone }}</li>
+    <li class="list-group-item"><strong>Datum rođenja:</strong> {{ birth_date }}</li>
+  </ul>
+</div>
+
+{% url 'profile' offer.seller_id %}
+
+$('.datepicker').datepicker({dateFormat: 'yy-mm-dd',});
+
+$('#id_address').hide()
+
+var price = +$('#id_price').val().replace(',','.');
+    var quantity = +$('#id_quantity').val();
+    var total = (price*quantity).toFixed(2).toString().replace('.',',');
+    $('#total_offered').text(total);

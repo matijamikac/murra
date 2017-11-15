@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  {% block title %}<title>MURRA</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  
+  <!-- Add additional CSS in static file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  
+  
+  
+</head>
+
+<body>
+{% load i18n static %}{% load postman_tags %}
+{% block extrahead %}{{ block.super }}
+<link type="text/css" media="all" rel="stylesheet" href="{% static 'postman/css/postman.css' %}" />
+{% endblock %}
+{% load l10n %}
+{% localize on %}
+
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-sm-2">
+      {% block sidebar %}
+      <a href="{% url 'index' %}"><img src="{% static 'images/murra_logo.png' %}" class='logo img-responsive'></a>
+      <ul class="sidebar-nav">
+          <li><a href="{% url 'index' %}">Naslovna</a></li>
+          <li><a href="{% url 'about' %}">O udruzi MURRA</a></li>
+          <li><a href="{% url 'offers' %}">Sve ponude</a></li>
+          <li><a href="{% url 'users' %}">Pregled korisnika</a></li>
+          
+      </ul>
+      <form id="searchform" action="{% url 'search_list_view' %}" method="get" accept-charset="utf-8">
+      
+      <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Pretraga ponuda">
+      <!--<button class="searchbutton" type="submit">
+        <i class="fa fa-search"></i> 
+      </button>  -->
+    </form>
+    <hr>
+      {% if user.is_authenticated %}
+      <ul class="sidebar-nav">
+       <li>Korisnik: {{ user.get_username }}</li>
+       <li class='balance_list_item'>Saldo:<span class='balance_data'>{{ user.totalbalance.value }}</span> </li>
+       <li class='balance_list_item'>Obveza:<span class='balance_data'>{{ user.totalliability.value }}</span> </li>
+       </ul>
+       <ul class="sidebar-nav">
+        
+       <li><a href="{% url 'user_profile' %}">Moj profil</a></li>
+       <li><a href="{% url 'user_transactions' %}">Moja preuzimanja</a></li>
+       <li><a href="{% url 'user_obligations' %}">Izvršene obveze</a></li>
+       <li><a href="{% url 'user_balance' %}">Stanje</a></li>
+       <li><a href="{% url 'user-offers' %}">Moje ponude</a></li>
+       <li><a href="{% url 'choose_category' %}">Nova ponuda</a></li>
+       
+       </ul>
+       <hr>   
+       <ul class="sidebar-nav" id="postman_menu">{% postman_unread as unread_count %}
+      <li><a href="{% url 'postman:inbox' %}">{% trans "Ulazne poruke" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
+      <li><a href="{% url 'postman:sent' %}">{% trans "Poslane poruke" %}</a></li>
+      <li><a href="{% url 'postman:write' %}">{% trans "Nova poruka" %}</a></li>
+      <li><a href="{% url 'postman:archives' %}">{% trans "Arhiva" %}</a></li>
+      <li><a href="{% url 'postman:trash' %}">{% trans "Smeće" %}</a></li>
+      </ul>
+      <hr>
+      <ul class="sidebar-nav">
+      <li><a href="{% url 'logout'%}?next={% url 'login' %}">Odjava</a></li>
+    </ul>
+   {% else %}
+   <ul class="sidebar-nav">
+     <li><a href="{% url 'login'%}?next={{request.path}}">Prijava</a></li>  
+     <li><a href="{% url 'registration' %}?next={{request.path}}">Registracija</a></li> 
+     </ul> 
+   {% endif %} 
+   
+   
+  {% endblock %}
+
+      </div>
+      <div class="col-sm-8 ">
+        {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags == "error" %} class="list-group-item list-group-item-danger" {% else %}
+    class="list-group-item list-group-item-success"{% endif%}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+      
+      {% block content %}
+      {% endblock %}
+
+      {% if page_obj %}
+      <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">prethodna</a>
+        {% endif %}
+
+        <span class="current">
+            Strana {{ page_obj.number }} od {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">sljedeća</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+      </div>
+      <div class="col-sm-2">
+      </div>
+    </div>
+
+  </div>
+{% endlocalize %}
+</body>
+</html>

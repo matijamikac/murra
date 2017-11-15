@@ -1,0 +1,62 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<br>
+{% if category.level != 2 %}
+
+<ul class="list-group">
+{% for key, value in final_categories.items %} 
+  <li class="list-group-item list_heading"><a href="{{ key.get_absolute_url }}">{{key.name}}</a> 
+  {% for i in value %} <span class="list_items"> <a href="{{ i.get_absolute_url }}">{{ i.name }}</a></span>
+  {% endfor %}</li>
+{% endfor %}
+</ul>
+
+{% else %}
+
+{% for key in final_categories %} 
+  <span class="list_items"><a href="{{ key.get_absolute_url }}">{{key.name}}</a> </span>
+  
+{% endfor %}
+{% endif %}
+
+{% if category.level == 1 %}
+    <p><a href="{% url 'offers' %}">   Sve ponude</a>></a>>{{category.name}}</p>
+{% elif category.level == 2 %}
+    <p><a href="{% url 'offers' %}">   Sve ponude</a>><a href="{{ category1.get_absolute_url }}">{{category1.name}}</a></a>>{{category.name}}</p> 
+
+{% else %}
+<p><a href="{% url 'offers' %}">   Sve ponude</a>><a href="{{ category2.get_absolute_url }}">{{category2.name}}</a>><a href="{{ category1.get_absolute_url }}">{{category1.name}}</a></a>>{{category.name}}</p>
+
+{% endif %} 
+
+    {% if page_obj %}
+    
+
+      {% for offer in page_obj %}
+
+      <div class="col-sm-12 offer_instance">
+      <div class="col-sm-3">
+      <a href="{{ offer.get_absolute_url }}"><img src="{{ offer.offer_pic.thumbnail.url }}" class="list_pics" ></a>
+      </div>
+        <div class ="col-sm-9 offer_list_details">
+          <ul class="list-group">
+          <li><a href="{{ offer.get_absolute_url }}">{{offer.title}}</a></li>
+          <li>Ponuda objavljena: {{ offer.publish_date }}</li>
+          <li>Ponuđač: <a href="{% url 'profile' offer.seller_id %}">{{ offer.seller }}</a></li>
+          
+          <li>Jedinična cijena: {{ offer.price}}/{{offer.measure}}</li>
+          <li>Ukupna vrijednost ponuđenog: {{ offer.value}}</li>
+          <li>Mjesto preuzimanja: {% if offer.address_type == 1 %} {{ offer.seller.userprofile.address}},&nbsp;{{offer.seller.userprofile.town}} {% else %} {{offer.address}} {% endif %}
+          
+          </ul>
+        </div>
+      </div>
+      
+      {% endfor %}
+
+    
+    {% else %}
+      <p>Trenutno nema ponuda</p>
+    {% endif %}       
+{% endblock %}

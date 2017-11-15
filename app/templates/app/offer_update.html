@@ -1,0 +1,47 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<br>
+<h4>Izmjena ponude</h4>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="table">
+    {{ form.as_table }}
+    
+    </table>
+    <div class="col-sm-4 calculated_total">
+    <p class="margin_center">Ukupna vrijednost ponuđenog: <span id="total_offered" class="no_margin_bottom">0</span></p>
+    </div>
+    <input type="submit" class="btn btn-default btn-lg" value="Potvrdi izmjene" />
+    
+</form>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    
+    $("label[for='id_address']").parent().parent().hide()
+    $("label[for='id_used_quantity']").parent().parent().hide();
+
+    var price = +$('#id_price').val().replace(',','.');
+    var quantity = +$('#id_start_quantity').val();
+    var total = (price*quantity).toFixed(2).toString().replace('.',',');
+    $('#total_offered').text(total);
+
+    $('#id_price, #id_start_quantity').on('keyup', function(){
+    	var price = +$('#id_price').val().replace(',','.');
+    	var quantity = +$('#id_start_quantity').val();
+    	var total = (price*quantity).toFixed(2).toString().replace('.',',');
+        $('#total_offered').text(total);
+    });
+
+    $("#id_address_type_1").click(function(){
+        $("label[for='id_address']").parent().parent().show()
+    })
+    $("#id_address_type_0").click(function(){
+        $("label[for='id_address']").parent().parent().hide()
+    })
+    
+});
+</script>
+{% endblock %}

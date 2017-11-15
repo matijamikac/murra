@@ -1,0 +1,34 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+
+    <h3>Moje ponude</h3>
+
+    {% if offer_list %}
+    
+
+      {% for offer in offer_list %} 
+      <div class="col-sm-12 offer_instance">
+      <div class="col-sm-3">
+      <a href="{{ offer.get_absolute_url }}"><img src="{{ offer.offer_pic.thumbnail.url }}" class='list_pics'></a>
+      </div>
+        <div class ="col-sm-9 offer_list_details">
+          <ul class="list-group">
+          <li><a href="{{ offer.get_absolute_url }}">{{offer.title}}</a></li>
+          <li>Ponuda objavljena: {{ offer.publish_date }}</li>
+          <li>Ponuđena količina: {{ offer.start_quantity}} (Preostalo: {{ offer.quantity}})</li>
+          
+          <li>Jedinična cijena: {{ offer.price}}/{{offer.measure}}</li>
+          <li>Ukupna vrijednost preostalog: {{ offer.value}}</li>
+          </ul>
+        </div>
+      </div>
+     
+      {% endfor %}
+    
+
+    {% else %}
+      <p>Trentuno nemate aktivnih ponuda</p>
+    {% endif %}       
+{% endblock %}

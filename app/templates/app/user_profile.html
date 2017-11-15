@@ -1,0 +1,70 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h4>Osobni korisnički profil: {{ request.user }}</h4>
+ <hr>
+
+   <table width="70%" class="userprofile_table">
+  <tr>
+    <th>Raspoloživo obračunskih jedinica za razmjenu:</th>
+    <td id='balance_available'>{{ user_profile.user.totalbalance.value }}</td>
+  </tr>
+  <tr>
+    <th>Preuzeta obveza prema članovima udruge:</th>
+    <td id='liability_available'>{{ user_profile.user.totalliability.value }}</td>
+  </tr>
+  <tr>
+    <th>Maksimalna obveza koju možete preuzeti:</th>
+    <td class='userprofile_otherdata'>{{ user_profile.automatic_max }}</td>
+  </tr>
+  <tr>
+    <th>Ukupni iznos ponuđenih roba i usluga:</th>
+    <td class='userprofile_otherdata'>{{ total_offer }}</td>
+  </tr>
+</table> 
+
+
+<hr>
+  <div class="user_container">
+  
+  <ul class="list-group user_profile_data">
+    
+    <li><strong>Korisnik:</strong> {{ user_profile.first_name }} {{ user_profile.last_name }}</li>
+    <li><strong>Adresa:</strong> {{ user_profile.address }}</li>
+     <li><strong>Mjesto:</strong> {{ user_profile.town }}</li>
+     <li><strong>Telefon:</strong> {{ user_profile.phone }}</li>
+     <li><strong>E-mail:</strong> {{ user_profile.user.email }}</li>
+    <li><strong>Opis:</strong> {{ user_profile.summary }}</li>
+  </ul>
+
+<div class="user_photo_container">
+  <img src="{{ user_profile.profile_photo.thumbnail.url }}" class="img-thumbnail">
+  </div>
+</div>
+<span><a href="{% url 'user_profile_update' %}">Izmijeni podatke</a></span>
+ <span><a href="{% url 'change_password' %}">&nbsp;Promijeni lozinku</a></span>
+<hr>
+
+<h4>Ocjena korisnika</h4>
+<div class='rating_background'></div>
+{% if rating >= 2 %}<div class='rating_background'></div>{% elif rating >= 1.75 %}<div class='rating_background_half'></div>{% elif rating >= 1.50 %}<div class='rating_background_half rating_background_active'></div>{% elif rating >= 1.25 %}<div class='rating_background_half rating_background_empty'></div>{% else %}<div class='rating_background rating_background_empty'></div>{% endif %}
+
+{% if rating >= 3 %}<div class='rating_background'></div>{% elif rating >= 2.75 %}<div class='rating_background_half'></div>{% elif rating >= 2.50 %}<div class='rating_background_half rating_background_active'></div>{% elif rating >= 2.25 %}<div class='rating_background_half rating_background_empty'></div>{% else %}<div class='rating_background rating_background_empty'></div>{% endif %}
+
+{% if rating >= 4 %}<div class='rating_background'></div>{% elif rating >= 3.75 %}<div class='rating_background_half'></div>{% elif rating >= 3.50 %}<div class='rating_background_half rating_background_active'></div>{% elif rating >= 3.25 %}<div class='rating_background_half rating_background_empty'></div>{% else %}<div class='rating_background rating_background_empty'></div>{% endif %}
+
+{% if rating >= 4.95 %}<div class='rating_background'></div>{% elif rating >= 4.75 %}<div class='rating_background_half'></div>{% elif rating >= 4.50 %}<div class='rating_background_half rating_background_active'></div>{% elif rating >= 4.25 %}<div class='rating_background_half rating_background_empty'></div>{% else %}<div class='rating_background rating_background_empty'></div>{% endif %}
+
+<span>{{ rating }} <strong>({{ num_instances}})</strong></span><span><a href="{% url 'ratings_list' user.id %}">Pogledaj ocjene</a></span>
+
+
+
+<!--
+<form method="get" action="">
+{% csrf_token %}
+<input class="btn btn-default btn-lg" type="submit" value ='Promijeni postavke'/>
+</form>   
+
+{% endblock %}
+-->

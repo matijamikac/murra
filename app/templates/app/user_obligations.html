@@ -1,0 +1,66 @@
+{% extends "base_generic.html" %}
+
+
+{% block content %}
+<script>
+$(document).ready(function() {
+    $('.datepicker').datepicker({
+      monthNames: ['Siječanj', 'Veljača', 'Ožujak', 'Travanj', 'Svibanj', 'Lipanj', 'Srpanj', 'Kolovoz', 'Rujan', 'Listopad', 'Studeni', 'Prosinac'],
+      dayNamesMin: ['Ne','Po','Ut','Sr','Če','Pe','Su'],
+      dateFormat: 'dd-mm-yy'
+    } );
+    
+});
+</script>
+  
+<br>
+
+<h4>Izvršene obveze korisnika</h4>
+<form action="" method="get">
+      {% csrf_token %}
+     
+      {{ date_form.start_date.label_tag }} {{ date_form.start_date}} {{ date_form.end_date.label_tag }} {{ date_form.end_date}}
+      
+      <div class="form-group">
+        <input type="submit" value="Osvježi" class="btn btn-primary" />
+      </div>
+    </form>
+
+
+<table class="table">
+  <thead>
+    <tr class="table_header">
+      <th width='100px'>Datum transakcije</th>
+      <th>Naziv ponude</th>
+      <th width='90px'>Preuzimatelj</th>
+      <th width='90px' align="right">Predana količina</th>
+      <th width='90px' align="right">Cijena</th>
+      <th width='90px' align="right">Ukupna predana vrijednost</th>
+      <th align="right" width='100px'>Ocjena</th>
+     </tr>
+  </thead>
+  <tbody class="active">
+{% for i in page_obj %}
+<tr>
+      <th scope="row">{{ i.date|date:'d.m.Y.'}}</th>
+      <td><a href="{{ i.offer.get_absolute_url }}"><strong>{{i.offer.title}}</strong></a></td>
+      <td><a href="{% url 'profile' i.buyer_id %}">{{ i.buyer }}</a></td>
+      <td align="right">{{ i.quantity }}</td>
+      <td align="right">{{ i.offer.price}}</td>
+      <td align="right">{{ i.value}}</td>
+      <td>{% if i.textrating %}
+        {% if i.textrating.value == 1 %} <div class='rating_background_small rating_background_small_1'></div>
+        {% elif i.textrating.value == 2 %} <div class='rating_background_small rating_background_small_2'></div>
+        {% elif i.textrating.value == 3 %} <div class='rating_background_small rating_background_small_3'></div>
+        {% elif i.textrating.value == 4 %} <div class='rating_background_small rating_background_small_4'></div>
+        {% else %} <div class='rating_background_small rating_background_small_5'></div>
+        {% endif %}
+         {% else %}
+        Nije ocijenjeno
+       {% endif %} </td>
+     </tr>
+        
+{% endfor %}</tbody></table>
+
+
+{% endblock %}

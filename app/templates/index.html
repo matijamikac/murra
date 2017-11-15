@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2>MURRA - Međimurska udruga razmjene roba</h2>
+
+  <p>Dobrodošli na stranice udruge <em>MURRA</em>, revolucionarnog pokušaja aktiviranja slobodnih potencijala Međimuraca.</p>
+
+<h3>MURRA je u fazi osnivanja, odnosno okupljanja članstva prije početka rada</h3>
+<h4>Ciljevi udruge</h4>
+
+  <p>Glavni cilj udruge je okupiti čim veći broj pojedinaca koji bi između sebe na lokalnoj razini bili spremni trampom (bez novca) razmjenjivati određene proizvode ili usluge. 
+Stavljanjem u pogon navedene udruge žele se postići slijedeći ciljevi:
+<ul>
+	<li>Iskorištavanje trenutačno neiskorištenih proizvodnih i uslužnih kapaciteta</li>
+	<li>Promoviranje korištenja lokalnih proizvoda (izbjegavanje ovisnosti o trgovačkim lancima i uvoznoj robi sumnjive kvalitete)</li>
+	<li>Izbjegavanje agenata (trgovačkih lanaca, otkupljivača) i njihovih marži u prodaji vlastitih proizvoda  čime se za proizvođače postiže veća prodajna vrijednost a za kupce domaća kvaliteta</li>
+	<li>Povećavanje društvene kohezije, poticanje zajedništva i meuđuovisnosti među ljudima na lokalnoj razini te posljedično stvaranje otpornosti na vanjske šokove (financijske, energetske, šokove dobave hrane itd.)</li>
+	<li>Centralizirano oglašavanje i prodaja (razmjena) svih proizvoda i usluga koji se realno mogu lokalno proizvesti.</li>
+</ul>
+</p>
+
+  <p><strong>Trenutno je u bazi buduće udruge:</strong></p>
+  <ul class="list-unstyled index_box">
+    <li><a href= "{% url 'users' %}"><strong>Korisnici:</strong></a> {{ num_users }}</li>
+    <li><a href= "{% url 'offers' %}"><strong>Ponude:</strong></a> {{ num_offers }}</li>
+    <li><strong>Veličina tržišta:</strong> {{ market_size }}</li>
+  </ul>
+
+{% endblock %}

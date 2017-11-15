@@ -1,0 +1,65 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <br>
+  <h4>Profil Korisnika: {{user_profile.user.username}}</h4>
+  <hr>
+  <div class="user_container">
+  
+  <ul class="list-group user_profile_data">
+    
+    <li><strong>Korisnik:</strong> {{ user_profile.first_name }} {{ user_profile.last_name }}</li>
+    <li><strong>Adresa:</strong> {{ user_profile.address }}</li>
+     <li><strong>Mjesto:</strong> {{ user_profile.town }}</li>
+     <li><strong>Datum rođenja:</strong> {{ user_profile.birth_date }}</li>
+     <li><strong>Telefon:</strong> {{ user_profile.phone }}</li>
+     <li><strong>E-mail:</strong> {{ user_profile.user.email }}</li>
+    <li><strong>Opis:</strong> {{ user_profile.summary }}</li>
+  </ul>
+
+<div class="user_photo_container">
+  <a href ="{{ user_profile.profile_photo.url }}"><img src="{{ user_profile.profile_photo.thumbnail.url }}" class="img-thumbnail"></a>
+  </div>
+</div>
+<hr>
+<h4>Pošalji poruku:<a href="{% url 'postman:write' user_profile.user %}"> {{ user_profile.user.username }}</a> </h4>
+<hr>
+<h4>Ocjena korisnika</h4>
+<div class='rating_background'></div>
+{% if rating >= 2 %}<div class='rating_background'></div>{% elif rating >= 1.75 %}<div class='rating_background_half'></div>{% elif rating >= 1.50 %}<div class='rating_background_half rating_background_active'></div>{% elif rating >= 1.25 %}<div class='rating_background_half rating_background_empty'></div>{% else %}<div class='rating_background rating_background_empty'></div>{% endif %}
+
+{% if rating >= 3 %}<div class='rating_background'></div>{% elif rating >= 2.75 %}<div class='rating_background_half'></div>{% elif rating >= 2.50 %}<div class='rating_background_half rating_background_active'></div>{% elif rating >= 2.25 %}<div class='rating_background_half rating_background_empty'></div>{% else %}<div class='rating_background rating_background_empty'></div>{% endif %}
+
+{% if rating >= 4 %}<div class='rating_background'></div>{% elif rating >= 3.75 %}<div class='rating_background_half'></div>{% elif rating >= 3.50 %}<div class='rating_background_half rating_background_active'></div>{% elif rating >= 3.25 %}<div class='rating_background_half rating_background_empty'></div>{% else %}<div class='rating_background rating_background_empty'></div>{% endif %}
+
+{% if rating >= 4.95 %}<div class='rating_background'></div>{% elif rating >= 4.75 %}<div class='rating_background_half'></div>{% elif rating >= 4.50 %}<div class='rating_background_half rating_background_active'></div>{% elif rating >= 4.25 %}<div class='rating_background_half rating_background_empty'></div>{% else %}<div class='rating_background rating_background_empty'></div>{% endif %}
+
+<span>{{ rating|floatformat }} :<strong>({{ num_instances}})</strong></span><span> <a href="{% url 'ratings_list' user_profile.user.id %}">Pogledaj ocjene</a></span>
+<hr>
+
+<h4>Aktivne ponude korisnika</h4>
+{% for offer in user_offers %}
+   
+      <div class="col-sm-12 offer_instance">
+      <div class="col-sm-3">
+      <a href="{{ offer.get_absolute_url }}"><img src="{{ offer.offer_pic.thumbnail.url }}" class='list_pics'></a>
+      </div>
+        <div class ="col-sm-9 offer_list_details">
+          <ul class="list-group">
+          <li><a href="{{ offer.get_absolute_url }}">{{offer.title}}</a></li>
+          <li>Ponuda objavljena: {{ offer.publish_date }}</li>
+          
+          
+          <li>Jedinična cijena: {{ offer.price}}/{{offer.measure}}</li>
+          <li>Ukupna vrijednost ponuđenog: {{ offer.value}}</li>
+          </ul>
+        </div>
+      </div>
+     
+      {% endfor %}
+
+
+
+
+
+{% endblock %}

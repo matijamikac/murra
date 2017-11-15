@@ -1,0 +1,47 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+
+{% if form.errors %}
+<p>Korisničko ime i lozinka su neispravni</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Nemate pristup ovoj stranici.</p>
+    {% else %}
+    <p>Molimo vas prijavite se kako bi vidjeli ovu stranicu</p>
+    {% endif %}
+{% endif %}
+
+
+
+<h3>Prijava korisnika</h3>
+<div>
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+
+
+<table>
+  
+<tr>
+  <td><strong>Korisničko ime:</strong></td>
+  <td>{{ form.username }}</td>
+</tr>
+<tr>
+  <td><strong>Lozinka:</strong></td>
+  <td>{{form.password }}</td>
+</tr>
+</table>
+
+<div>
+  <input type="submit" class="btn btn-default btn-lg" value="Prijavi se" />
+  <input type="hidden" name="next" value="" />
+</div>
+</form>
+</div>
+{# Assumes you setup the password_reset view in your URLconf #}
+<p><a href="{% url 'password_reset' %}">Zaboravili lozinku?</a></p>
+
+{% endblock %}

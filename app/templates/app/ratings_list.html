@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<br>
+<h4>Ocjene za korisnika: {{ userinstance.username }}</h4>
+
+{% for i in list_of_ratings %}
+<div class="ratings_list_item">
+	
+        
+        <p><a href="{% url 'profile' i.transaction.buyer_id %}"> {{ i.transaction.buyer }}</a>   {{ i.date }}</p>
+<p> {{ i.text_rating }}</p>
+{% if i.value == 1 %} <div class='rating_background_small rating_background_small_1'></div>
+        {% elif i.value == 2 %} <div class='rating_background_small rating_background_small_2'></div>
+        {% elif i.value == 3 %} <div class='rating_background_small rating_background_small_3'></div>
+        {% elif i.value == 4 %} <div class='rating_background_small rating_background_small_4'></div>
+        {% else %} <div class='rating_background_small rating_background_small_5'></div>
+        {% endif %}
+</div>
+{% endfor %}
+{% endblock %}

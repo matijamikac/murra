@@ -1,0 +1,60 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<br>
+
+<h4 class="naslov">Odaberite kategoriju u koju spada vaša ponuda</h4>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+    
+    $(".subcategory_list").hide();
+    $(".final_category_list").hide();
+
+
+    $('.main_category').on('click', function(){
+        $(this).next().toggle();
+    });
+
+    $('.main_category').on('mouseenter', function(){
+        $(this).css({'font-type':'bold', 'background-color':'#cae9aa'});
+    });
+
+    $('.main_category').on('mouseleave', function(){
+        $(this).css({'font-type':'normal', 'background-color':'white'});
+    });
+
+    $('.subcategory').on('click', function(){
+        $(this).next().toggle();
+    });
+});
+</script>
+
+
+<ul id="category_menu" class="list-group">
+{% for i in categories %}
+<li class='list-group-item main_category'> <a href="#">{{ i.name }}</a></li>
+<ul class="list-group subcategory_list">
+{% for sub in subcategories %}
+{% if sub.parent_id == i.id %}
+<li class="list-group-item subcategory"><a href="#"> {{ sub.name }}</a></li>
+<ul class="list-group final_category_list">
+	{% for sub1 in subcategories %}
+	{% if sub1.parent_id == sub.id %}
+	<li class='list-group-item final_category'> <a href="{% url "offer_create" sub1.slug %}">{{ sub1.name }}</a></li>
+	{% endif %}
+	{% endfor %}
+	</ul>
+	
+
+{% endif %}
+{% endfor %}
+</ul>
+
+
+{% endfor %}
+</ul>
+
+{% endblock %}

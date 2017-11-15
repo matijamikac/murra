@@ -1,0 +1,54 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+	
+	$('#id_quantity').attr('data-price', '{{ price }}');
+  
+    
+    $('#id_quantity').on('keyup', function(){
+    	var price = +$(this).data('price').replace(',','.');
+    	var quantity = +$('#id_quantity').val();
+    	var total = (price*quantity).toFixed(2).toString().replace('.',',');
+        $('#total_price').text(total);
+    });
+
+    
+});
+</script>
+
+  <h3>Ponuda: {{ title }}</h3>
+
+  <p><strong>Ponuđač:</strong> <a href="">{{ seller }}</a></p> 
+  <p><strong>Opis ponude:</strong> {{ summary }}</p>
+  <p><strong>Raspoloživa količina:</strong> {{ quantity }}{% if measure == 'kom' %} kom.{% elif measure == 'kg' %} kg {% else %} sat. {% endif %}</p> 
+  <p><strong>Cijena:</strong> {{ price }}{% if measure == 'kom' %} / kom{% elif measure == 'kg' %} / kg {% else %} / sat {% endif %}</p>
+     
+   
+{% if request.user == seller %}
+<form  method="get" action="{% url 'offer_update' pk %}">
+    <input class="btn btn-default btn-lg" type="submit" value ='Promijeni ponudu'/>
+</form>
+{% endif %}
+{% if request.user != seller %}
+
+<form action="" method="post" >
+
+{% csrf_token %}
+<div>
+{{ quantityform }}<b class="d-inline"><strong>{% if measure == 'kom' %} kom.{% elif measure == 'kg' %} kg {% else %} sat. {% endif %}</strong></b>
+</div>
+<div class="col-sm-4 calculated_total">
+    <p class="margin_center">Ukupna vrijednost za preuzeti: <span id="total_price" class="no_margin_bottom">{{ price }}</span></p>
+    </div>
+<input class="btn btn-default btn-lg" type="submit" value ='Potvrdi preuzimanje'/>
+
+</form>
+
+{% endif %}  
+
+{% endblock %}

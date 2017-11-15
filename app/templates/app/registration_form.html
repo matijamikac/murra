@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<br>
+<h4>Registracija novog korisnika</h4>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="table">
+    
+    {{ user_form.as_table }}
+   
+    {{ profile_form.as_table }}
+    
+    </table>
+    <input type="submit" class="btn btn-default btn-lg" value="Registriraj se" />
+    
+</form>
+
+<script>
+$(document).ready(function() {
+    $('#id_birth_date').datepicker({
+      monthNames: ['Siječanj', 'Veljača', 'Ožujak', 'Travanj', 'Svibanj', 'Lipanj', 'Srpanj', 'Kolovoz', 'Rujan', 'Listopad', 'Studeni', 'Prosinac'],
+      dayNamesMin: ['Ne','Po','Ut','Sr','Če','Pe','Su'],
+      dateFormat: 'yy-mm-dd',
+      changeYear: true,
+      yearRange: "1930:2010",
+    } );
+    
+});
+</script>
+{% endblock %}

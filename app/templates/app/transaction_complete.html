@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+
+<h4>Transakcija provedena. Molimo vas kontaktirajte korisnika<a href="{% url 'profile' seller_id %}"> {{ seller }} </a> vezano uz preuzimanje željene robe/usluge</h4>
+<p><strong>Preuzeto: {{ title }}</strong></p>
+<p>{{ quantity }} {{ measure }} po cijeni od {{ price }}/{{ measure }}. Ukupna preuzeta vrijednost: {{ value }}</p>
+<p><a href="{% url 'user_profile' %}">Moj profil</a></p>
+<p><a href="{% url 'user_transactions' %}">Moja preuzimanja</a></p>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base_generic.html" %}
+
+
+{% block content %}
+
+  
+<br>
+
+<h4>Popis korisnika udruge</h4>
+<form action="" method="get">
+      {% csrf_token %}
+     
+      {{ form.surname.label_tag }} {{ form.surname}} {{ form.name.label_tag }} {{ form.name}} 
+      {{ form.town.label_tag }} {{ form.town}}
+      
+      <div class="form-group">
+        <input type="submit" value="Pretraga" class="btn btn-primary" />
+      </div>
+    </form>
+
+
+{% if page_obj%}
+{% for i in page_obj %}
+<div class="col-sm-12 user_instance">
+      <div class="col-sm-2">
+      <a href="{{ i.get_absolute_url }}"><img src="{{ i.profile_photo.small.url }}" class="" ></a>
+      </div>
+        <div class ="col-sm-10 user_details">
+          <ul class="list-unstyled">
+          <li><a href="{{ i.get_absolute_url }}">{{i.user.username}}</a></li>
+          <li>Ime i prezime: {{ i.first_name }} {{i.last_name}}</li>
+          <li>Mjesto: {{ i.town}}</li>
+          <li>Član od: {{ i.registration_date|date:'d.m.Y.'}}</li>
+          </ul>
+        </div>
+      </div>
+        
+{% endfor %}
+{% else %} <p>0 rezultata pretrage!</p>{% endif%}
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<br>
+<h4>Detalji ponude</h4>
+{% if offer.active == False %}
+<h4 style="color: red">Ova ponuda nije aktivna - obrisana je</h4>
+{% endif %}
+
+<div class="offerdetail_instance">
+      <div class="col-sm-3">
+      <a href ="{{ offer.offer_pic.url }}"><img src="{{ offer.offer_pic.thumbnail.url }}" class="list_pics"></a>
+      </div>
+        <div class ="col-sm-9 offer_list_details">
+          <ul class="list-group">
+          <li><strong>{{offer.title}}</strong></li>
+          <li>Ponuda objavljena: {{ offer.publish_date }}</li>
+          <li>Ponuđač: <a href="{% url 'profile' offer.seller_id %}"> {{ offer.seller }}</a></li>
+          <li>Ponuđena količina: {{ offer.start_quantity}} (Preostalo: {{ offer.quantity}})</li>
+          <li>Jedinična cijena: {{ offer.price}}/{{offer.measure}}</li>
+          <li>Ukupna preostala vrijednost: {{ offer.value}}</li>
+          <li>Mjesto preuzimanja: {% if offer.address_type == 1%} {{ offer.seller.userprofile.address}},&nbsp;{{offer.seller.userprofile.town}} {% else %} {{offer.address}} {% endif %}
+          <li>Opis ponude: {{ offer.summary }}</li>
+          </ul>
+        </div>
+      </div>
+
+{% if offer.active %}   
+{% if request.user == offer.seller %}
+<form class="col-sm-3" method="get" action="{% url 'offer_update' offer.pk %}">
+    <input class="btn btn-default btn-lg" type="submit" value ='Promijeni ponudu'/>
+</form>
+ 
+<form  class="col-sm-3" method="get" action="{% url 'offer_delete' offer.pk %}">
+    <input class="btn btn-default btn-lg" type="submit" value ='Izbriši ponudu'/>
+</form>
+{% endif %}
+{% if request.user != offer.seller %}
+
+<form method="get" action="{% url 'transaction' offer.pk %}">
+{% csrf_token %}
+<input class="btn btn-default btn-lg" type="submit" value ='Preuzmi ponuđeno'/>
+</form>
+<hr>
+<h4>Pošalji poruku:<a href="{% url 'postman:write' offer.seller %}"> {{ offer.seller }}</a> </h4>
+
+{% endif %} 
+{% endif %} 
+{% endblock %}
+

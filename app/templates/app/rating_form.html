@@ -1,0 +1,114 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<script type="text/javascript">
+   $(document).ready(function() {
+
+    
+    $(".rating_background").addClass("rating_background_empty");
+    $('.rating_background').first().addClass("invisible")
+    var first_radio = $('.rating_background').first().next();
+    if (first_radio.find('input').is(':checked')) {
+        $(first_radio).removeClass('rating_background_empty');
+        }
+        else if (first_radio.next().find('input').is(':checked')){
+          $(first_radio).removeClass('rating_background_empty');
+          $(first_radio).next().removeClass('rating_background_empty');  
+        }
+        else if (first_radio.next().next().find('input').is(':checked')){
+          $(first_radio).removeClass('rating_background_empty');
+          $(first_radio).next().removeClass('rating_background_empty'); 
+          $(first_radio).next().next().removeClass('rating_background_empty');  
+        }
+        else if (first_radio.next().next().next().find('input').is(':checked')){
+          $(first_radio).removeClass('rating_background_empty');
+          $(first_radio).next().removeClass('rating_background_empty'); 
+          $(first_radio).next().next().removeClass('rating_background_empty'); 
+          $(first_radio).next().next().next().removeClass('rating_background_empty'); 
+        }
+        else if (first_radio.next().next().next().next().find('input').is(':checked')){
+          $(first_radio).removeClass('rating_background_empty');
+          $(first_radio).next().removeClass('rating_background_empty'); 
+          $(first_radio).next().next().removeClass('rating_background_empty'); 
+          $(first_radio).next().next().next().removeClass('rating_background_empty'); 
+          $(first_radio).next().next().next().next().removeClass('rating_background_empty'); 
+        }
+    
+
+
+
+    $('.rating_background').on('mouseenter', function(){
+        $(this).removeClass("rating_background_empty").addClass("rating_background_active");
+        $(this).prev().removeClass("rating_background_empty")
+        $(this).prev().prev().removeClass("rating_background_empty")
+        $(this).prev().prev().prev().removeClass("rating_background_empty")
+        $(this).prev().prev().prev().prev().removeClass("rating_background_empty")
+    });
+
+    $('.rating_background').on('mouseleave', function(){
+        if ($(this).find('input').is(':checked')) {
+        $(this).removeClass("rating_background_active");    
+        }
+        else if ($(this).next().find('input').is(':checked')) {
+        $(this).removeClass("rating_background_active");    
+        }
+        else if ($(this).next().next().find('input').is(':checked')) {
+        $(this).removeClass("rating_background_active");    
+        }
+        else if ($(this).next().next().next().find('input').is(':checked')) {
+        $(this).removeClass("rating_background_active");    
+        }
+        else if ($(this).next().next().next().next().find('input').is(':checked')) {
+        $(this).removeClass("rating_background_active");    
+        }
+        else {
+        $(this).addClass("rating_background_empty").removeClass("rating_background_active");    
+        }
+        
+    });
+
+    $('.rating_background').on('click', function(){
+        $(this).removeClass("rating_background_empty").removeClass("rating_background_active");
+        $(this).prev().removeClass("rating_background_empty")
+        $(this).prev().prev().removeClass("rating_background_empty")
+        $(this).prev().prev().prev().removeClass("rating_background_empty")
+        $(this).prev().prev().prev().prev().removeClass("rating_background_empty")
+        $(this).next().addClass("rating_background_empty")
+        $(this).next().next().addClass("rating_background_empty")
+        $(this).next().next().next().addClass("rating_background_empty")
+        $(this).next().next().next().next().addClass("rating_background_empty")
+    });
+}); 
+
+</script>
+<br>
+{% if transaction.buyer.id == request.user.id %}
+<h4>Ocjena korisnika: <a href="{% url 'profile' transaction.offer.seller_id %}">{{ transaction.offer.seller }}</a></h4>
+
+
+
+<form action="" method="post">
+    {% csrf_token %}
+        
+    
+    
+  {% for radio in rating_form.value%}
+  <div class='rating_background'>
+
+        {{ radio.tag }}
+   
+</div>
+    {% endfor %}
+    <div class='text_rating'>
+        <p> Unesite pisani dojam o proizvodu odnosno korisniku</p>
+        {{ rating_form.text_rating }}
+    </div>
+    <input type="submit" class="btn btn-default btn-lg" value="Ocijeni!" />
+    
+</form>
+{% else %}
+<p>Nemate pravo pristupa</p>
+{% endif %}
+
+{% endblock %}
