@@ -169,3 +169,8 @@ POSTMAN_AUTOCOMPLETER_APP = {
     'arg_name': '',  # default is 'channel'
     'arg_default': 'postman_friends',  # no default, mandatory to enable the feature
 }  # default is {}
+
+# Heroku: Update database configuration from $DATABASE_URL.
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
