@@ -191,7 +191,7 @@ DATABASES['default'].update(db_from_env)
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'murra/static'),
+    os.path.join(BASE_DIR, 'app/static'),
 ]
 
 AWS_ACCESS_KEY_ID = 'AKIAIT2Z5TDYPX3ARJBA'
