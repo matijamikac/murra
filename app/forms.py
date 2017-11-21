@@ -36,7 +36,7 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        exclude = ('user', 'automatic_max')
+        exclude = ('user', 'automatic_max', 'registration_date')
         widgets = {'address': forms.Textarea(attrs={'rows': '3', 'cols': '40'}),
                  }
         localized_fields = '__all__'
