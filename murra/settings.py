@@ -134,7 +134,7 @@ USE_TZ = True
 
 #STATIC_URL = '/static/'
 
-MEDIA_ROOT='/Users/MMikac.INTERFINANCE/murra/murra/murra/media/' #(i.e: '/home/ike/project/media/')
+#MEDIA_ROOT='/Users/MMikac.INTERFINANCE/murra/murra/murra/media/' #(i.e: '/home/ike/project/media/')
 MEDIA_URL='/media/'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
@@ -147,7 +147,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'mmikac@gmail.com'
-EMAIL_HOST_PASSWORD = 'Peakslee1'
+#EMAIL_HOST_PASSWORD = ''
 
 SHORT_DATETIME_FORMAT = 'd/m/Y P'
 

@@ -21,6 +21,7 @@ from django.template import RequestContext
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils.text import slugify
 
 def index(request):
     
@@ -391,6 +392,16 @@ class OffersByUserListView(LoginRequiredMixin, generic.ListView):
 def choose_category(request):
     categories = Category.objects.filter(parent_id__isnull=True)
     subcategories = Category.objects.filter(parent_id__isnull=False)
+
+    if request.method == 'POST':
+        slug = request.POST['slug']
+        user_input = request.POST['user_input']
+        category = get_object_or_404(Category, slug=slug)
+        new_category = Category()
+        new_category.parent_id = category.id
+        new_category.name = user_input
+        new_category.slug = slugify(user_input)
+        new_category.save()
 
     return render(
         request,

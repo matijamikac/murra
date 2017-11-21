@@ -46,6 +46,7 @@ $(document).ready(function() {
 	<li class='list-group-item final_category'> <a href="{% url "offer_create" sub1.slug %}">{{ sub1.name }}</a></li>
 	{% endif %}
 	{% endfor %}
+    <li class='list-group-item final_category'>  + dodaj kategoriju<form method='POST' action=''>{% csrf_token %}<input type='hidden' name='slug' value='{{ sub.slug }}'><input name="user_input"><input type="submit" value="OK"/></form>
 	</ul>
 	
 
