@@ -1,0 +1,4 @@
+{% extends "postman/base_write.html" %}
+{% load i18n %}
+{% block pm_write_title %}{% trans "Odgovori"%}{% endblock %}
+{% block pm_write_recipient %}<tr><th><label>{% trans "Primatelj" %}:</label></th><td>{{ recipient }}</td></tr>{% endblock %}

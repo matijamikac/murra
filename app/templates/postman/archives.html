@@ -1,0 +1,8 @@
+{% extends "postman/base_folder.html" %}
+{% load i18n %}
+{% block pm_folder_title %}{% trans "Arhivirane poruke" %}{% endblock %}
+{% block pm_archive_button %}{% endblock %}
+{% block pm_undelete_button %}{% endblock %}
+{% block pm_footer_info %}
+<p>{% trans "Poruke u ovoj mapi nikada neće biti obrisane. Možete ju koristiti za dugoročnu pohranu." %}</p>
+{% endblock %}

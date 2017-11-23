@@ -1,0 +1,72 @@
+{% extends "postman/base.html" %}
+
+{% load i18n postman_tags %}{% load pagination_tags %}{% comment %}
+WARNING: 'pagination_tags' is a name from the django-pagination application.
+For convenience, the design of this template is done with the use of that application.
+Django-postman will still be working, even if that application is not installed, by providing a mock
+for the template tag library.
+If the real implementation is to be used, just make sure that 'pagination' is declared before 'postman'
+in the INSTALLED_APPS setting.
+{% endcomment %}
+{% block content %}
+<br>
+<script type="text/javascript">
+$(document).ready(function() {
+  
+  $("th").addClass('postman_table_head');
+});
+</script>
+<div id="postman">
+<h4>{% block pm_folder_title %}{% endblock %}</h4>
+{% autopaginate pm_messages %}
+{% if invalid_page %}
+<p>{% trans "Ovaj broj stranice nije ispravan." %}</p>
+{% else %}
+{% if pm_messages %}
+{% block pm_by_modes %}<div id="pm_by_modes">
+<span class="pm_by_mode">{% if by_message %}<a href="{{ by_conversation_url }}">{% endif %}{% trans "po razgovoru" %}{% if by_message %}</a>{% endif %}</span>
+<span class="pm_by_mode">{% if by_conversation %}<a href="{{ by_message_url }}">{% endif %}{% trans "po poruci" %}{% if by_conversation %}</a>{% endif %}</span>
+</div>{% endblock pm_by_modes %}
+<form action="{% block pm_form_action %}{% endblock %}" method="post">{% csrf_token %}
+{% block pm_form_buttons %}<span id="pm_buttons">
+{% block pm_delete_button %}<button type="submit" onclick="this.form.action='{% url 'postman:delete' %}'">{% trans "Izbriši" %}</button>{% endblock %}
+{% block pm_archive_button %}<button type="submit" onclick="this.form.action='{% url 'postman:archive' %}'">{% trans "Arhiviraj" %}</button>{% endblock %}
+{% block pm_undelete_button %}<button type="submit" onclick="this.form.action='{% url 'postman:undelete' %}'">{% trans "Vrati izbrisano" %}</button>{% endblock %}
+{% block pm_read_button %}<button type="submit" onclick="this.form.action='{% url 'postman:mark-read' %}'">{% trans "Označi kao pročitano" %}</button>{% endblock %}
+{% block pm_unread_button %}<button type="submit" onclick="this.form.action='{% url 'postman:mark-unread' %}'">{% trans "Označi kao nepročitano" %}</button>{% endblock %}
+</span>{% endblock %}
+<table id="pm_messages">
+ <thead>
+  <tr>
+   <th>{% trans "Akcija" %}</th>
+{% block pm_sender_header %}   <th><a href="{% postman_order_by sender %}">{% trans "Pošiljatelj" %}</a></th>{% endblock %}
+{% block pm_recipient_header %}   <th><a href="{% postman_order_by recipient %}">{% trans "Primatelj" %}</a></th>{% endblock %}
+   <th><a href="{% postman_order_by subject %}">{% trans "Predmet" %}</a></th>
+   <th><a href="{% postman_order_by date %}">{% block pm_date %}{% trans "Datum" %}{% endblock %}</a></th>
+  </tr>
+ </thead>
+ <tbody>{% for message in pm_messages %}
+  <tr>
+   <td><input type="checkbox" {% if by_conversation and message.thread_id %}name="tpks" value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %} /></td>
+{% block pm_sender_cell %}   <td>{{ message.obfuscated_sender|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}</td>{% endblock %}
+{% block pm_recipient_cell %}   <td>{{ message.obfuscated_recipient|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}</td>{% endblock %}
+   <td>{% if message.is_new %}<strong>{% endif %}{% if message.is_replied %}<em>{% endif %}
+{% block pm_subject %}
+    <a href="{% if by_conversation and message.thread_id %}{% url 'postman:view_conversation' message.thread_id %}{% else %}{% url 'postman:view' message.pk %}{% endif %}?next={{ current_url|urlencode }}">
+    {% include "postman/inc_subject_ex.html" %}
+    </a>
+{% endblock %}
+   {% if message.is_replied %}</em>{% endif %}{% if message.is_new %}</strong>{% endif %}</td>
+   <td>{{ message.sent_at|compact_date:_("g:i A,M j,n/j/y") }}</td>
+  </tr>{% endfor %}
+ </tbody>
+</table>
+</form>
+{% paginate %}
+{% else %}
+<p>{% trans "Nema poruka." %}</p>
+{% endif %}
+{% endif %}
+{% block pm_footer_info %}{% endblock %}
+</div>
+{% endblock content %}
