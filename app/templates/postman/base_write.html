@@ -19,4 +19,14 @@
 <button type="submit">{% trans "Pošalji" %}</button>
 </form>
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+    
+    $("label[for='id_recipients']").text('Primatelj(korisničko ime)')
+    $("label[for='id_subject']").text('Predmet')
+    $("label[for='id_body']").text('Poruka')
+
+})
+
+</script>
 {% endblock %}
