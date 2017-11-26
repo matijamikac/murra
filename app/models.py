@@ -147,7 +147,7 @@ class Transaction(models.Model):
 class Balance(models.Model):
     value = models.DecimalField('Vrijednost', max_digits=15, decimal_places=2)
     user = models.ForeignKey(User)
-    balance_type = models.IntegerField(default=1) #1 = provizija, 2=ažuriranje ponude, 3=brisanje ponude, 4=transakcija
+    balance_type = models.IntegerField(default=1) #1 = provizija, 2=ažuriranje ponude, 3=brisanje ponude, 4=transakcija, 5=deprecijacija
     trans = models.ForeignKey(Transaction, null=True, blank=True)
     date = models.DateTimeField(default=timezone.now)
     offer = models.ForeignKey(Offer, null=True, blank=True)
@@ -175,7 +175,7 @@ class PositiveBalance(models.Model):
     publish_date = models.DateTimeField(default=timezone.now)
     transactions = models.ManyToManyField(Balance)
     charge = models.DecimalField(max_digits=15, decimal_places=2, null=True)
-    positivebalance_type = models.IntegerField(default=1) #1=nova ponuda, 2=automatski po transakciji, 3=MURRA
+    positivebalance_type = models.IntegerField(default=1) #1=nova ponuda, 2=automatski po transakciji, 3=MURRA, 4=deprecijacija
     offer = models.ForeignKey(Offer, null=True, blank=True)
     transaction = models.ForeignKey(Transaction, null=True, blank=True)
 

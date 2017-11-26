@@ -41,7 +41,7 @@ $(document).ready(function() {
   {% for i in page_obj %}
     <tr class="positive_balance_rows">
       <th scope="row">{{ i.publish_date|date:'d.m.Y.' }}</th>
-      <td>{% if i.positivebalance_type == 1 %} nova:<a href="{% url 'offer-detail' i.offer_id %}">{{ i.offer.title }}</a>{% elif i.positivebalance_type == 2 %} auto:<a href="{% url 'transaction_complete' i.transaction.pk %}">{{i.transaction.offer.title}}</a>
+      <td>{% if i.positivebalance_type == 1 %} nova:<a href="{% url 'offer-detail' i.offer_id %}">{{ i.offer.title }}</a>{% elif i.positivebalance_type == 2 %} auto:<a href="{% url 'transaction_complete' i.transaction.pk %}">{{i.transaction.offer.title}}</a> {% elif i.positivebalance_type == 4 %} deprecijacija
       {% else %} MURRA{% endif %}</td>
       <td>{{i.value}}</td>
       <td>{{ i.used }}</td>
@@ -51,7 +51,9 @@ $(document).ready(function() {
 {% for trans in i.transactions.all %}
 <tr class="balance_rows">
       <th scope="row">{{ trans.date|date:'d.m.Y.' }}</th>
-      <td>{% if trans.balance_type == 1 %} MURRA-provizija {% elif trans.balance_type == 2 %} ažuriranje ponude:<a href="{% url 'offer-detail' trans.offer_id %}">{{trans.offer.title}}</a> {% elif trans.balance_type == 3 %} brisana ponuda: <a href="{% url 'offer-detail' trans.offer_id %}">{{trans.offer.title}}</a> {% else %} preuzimanje: <a href="{% url 'transaction_complete' trans.trans_id %}">{{trans.trans.offer.title}}</a>{% endif %}</td>
+      <td>{% if trans.balance_type == 1 %} MURRA-provizija {% elif trans.balance_type == 2 %} ažuriranje ponude:<a href="{% url 'offer-detail' trans.offer_id %}">{{trans.offer.title}}</a> {% elif trans.balance_type == 3 %} brisana ponuda: <a href="{% url 'offer-detail' trans.offer_id %}">{{trans.offer.title}}</a> 
+        {% elif trans.balance_type == 5 %} deprecijacija
+        {% else %} preuzimanje: <a href="{% url 'transaction_complete' trans.trans_id %}">{{trans.trans.offer.title}}</a>{% endif %}</td>
       <td></td>
       <td>{{ trans.value }}</td>
       <td></td>
