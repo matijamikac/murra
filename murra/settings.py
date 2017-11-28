@@ -209,16 +209,16 @@ STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
 DEFAULT_FILE_STORAGE = 'murra.storage_backends.MediaStorage'  # <-- here is where we reference it
 
-CELERY_BROKER_URL=os.environ['REDIS_URL']
-CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
+CELERY_BROKER_URL = os.environ['REDIS_URL']
+CELERY_RESULT_BACKEND = os.environ['REDIS_URL']
 
-#redis_url = parse(os.environ.get('REDIS_URL'))
+redis_url = parse(os.environ.get('REDIS_URL'))
 CACHES = {
     "default": {
          "BACKEND": "redis_cache.RedisCache",
-         "LOCATION": "{0}:{1}".format(CELERY_BROKER_URL.hostname, CELERY_BROKER_URL.port),
+         "LOCATION": "{0}:{1}".format(redis_url.hostname, redis_url.port),
          "OPTIONS": {
-             "PASSWORD": CELERY_BROKER_URL.password,
+             "PASSWORD": redis_url.password,
              "DB": 0,
          }
     }
