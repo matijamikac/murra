@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-import urlparse
+#import urlparse
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -211,8 +211,10 @@ STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
 DEFAULT_FILE_STORAGE = 'murra.storage_backends.MediaStorage'  # <-- here is where we reference it
 
+app.conf.update(BROKER_URL=os.environ['REDIS_URL'],
+                CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
 
-redis_url = urlparse.urlparse(os.environ.get('REDIS_URL'))
+#redis_url = urlparse.urlparse(os.environ.get('REDIS_URL'))
 CACHES = {
     "default": {
          "BACKEND": "redis_cache.RedisCache",
@@ -224,5 +226,3 @@ CACHES = {
     }
 }
 
-#app.conf.update(BROKER_URL=os.environ['REDIS_URL'],
-#                CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])

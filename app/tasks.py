@@ -5,7 +5,7 @@ from .app_settings import *
 #app = Celery('tasks', broker='pyamqp://guest@localhost//')
 
 #@app.task
-@periodic_task(run_every=crontab(minute='*/3'))
+@periodic_task(run_every=crontab(minute='*/3it'))
 def depreciation():
     list_of_positive_balances = PositiveBalance.objects.filter(charge__gt=0)
 
