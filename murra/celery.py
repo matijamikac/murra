@@ -22,5 +22,5 @@ def debug_task(self):
     print('Request: {0!r}'.format(self.request))
 
 
-app.conf.update(CELERY_BROKER_URL=os.environ['REDIS_URL'],
-                CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
+#app.conf.update(CELERY_BROKER_URL=os.environ['REDIS_URL'],
+#                CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])

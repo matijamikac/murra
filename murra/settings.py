@@ -196,8 +196,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'app/static'),
 ]
 
-#AWS_ACCESS_KEY_ID = 'AKIAIT2Z5TDYPX3ARJBA'
-#AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'murra'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
@@ -211,16 +209,16 @@ STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
 DEFAULT_FILE_STORAGE = 'murra.storage_backends.MediaStorage'  # <-- here is where we reference it
 
-#app.conf.update(BROKER_URL=os.environ['REDIS_URL'],
-#                CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
+CELERY_BROKER_URL=os.environ['REDIS_URL']
+CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
 
 #redis_url = parse(os.environ.get('REDIS_URL'))
 CACHES = {
     "default": {
          "BACKEND": "redis_cache.RedisCache",
-         "LOCATION": "{0}:{1}".format(REDIS_URL.hostname, REDIS_URL.port),
+         "LOCATION": "{0}:{1}".format(CELERY_BROKER_URL.hostname, CELERY_BROKER_URL.port),
          "OPTIONS": {
-             "PASSWORD": REDIS_URL.password,
+             "PASSWORD": CELERY_BROKER_URL.password,
              "DB": 0,
          }
     }
