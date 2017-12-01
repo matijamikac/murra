@@ -34,3 +34,4 @@ def depreciation():
 	        murra_totalbalance =TotalBalance.objects.get(user_id=provision_receiver_id)
 	        murra_totalbalance.value += murra.value
 	        murra_totalbalance.save()
+"""

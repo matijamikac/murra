@@ -33,7 +33,7 @@ def depreciation():
     for i in list_of_positive_balances:
     	if i.depreciation < 1:
 	    	new_balance = Balance()
-	        new_balance.value = i.charge * depreciation_provision
+	    	new_balance.value = i.charge * depreciation_provision
 	        new_balance.user_id = i.user_id
 	        new_balance.type = 5
 	        #new_balance.offer_id = offer.id
