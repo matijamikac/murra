@@ -22,8 +22,8 @@ def debug_task(self):
     print('Request: {0!r}'.format(self.request))
 
 
-from app.app_settings import *
-from app.models import *
+from .app_settings import *
+from .models import *
 
 
 @app.task(bind=True)
