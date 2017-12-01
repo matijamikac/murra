@@ -11,8 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-import djcelery
-djcelery.setup_loader()
+
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -48,7 +47,6 @@ INSTALLED_APPS = [
     'storages',
     'stdimage',
     'postman',
-    'djcelery',
     'django_celery_beat'
 ]
 
