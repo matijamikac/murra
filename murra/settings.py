@@ -209,13 +209,13 @@ STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
 DEFAULT_FILE_STORAGE = 'murra.storage_backends.MediaStorage'  # <-- here is where we reference it
 
-BROKER_URL = os.environ.get("CLOUDAMQP_URL", "django://")
-BROKER_POOL_LIMIT = 1
-BROKER_CONNECTION_MAX_RETRIES = None
+CELERY_BROKER_URL = os.environ.get("CLOUDAMQP_URL", "django://")
+CELERY_BROKER_POOL_LIMIT = 1
+CELERY_BROKER_CONNECTION_MAX_RETRIES = None
 
 CELERY_TASK_SERIALIZER = "json"
 CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
-if BROKER_URL == "django://":
+if CELERY_BROKER_URL == "django://":
     INSTALLED_APPS += ("kombu.transport.django",)

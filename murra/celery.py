@@ -22,10 +22,7 @@ def debug_task(self):
     print('Request: {0!r}'.format(self.request))
 
 
-from .app_settings import *
-from .models import *
-
-
+"""
 @app.task(bind=True)
 def depreciation():
     list_of_positive_balances = PositiveBalance.objects.filter(charge__gt=0)
@@ -53,3 +50,4 @@ def depreciation():
 	    	murra_totalbalance =TotalBalance.objects.get(user_id=provision_receiver_id)
 	    	murra_totalbalance.value += murra.value
 	    	murra_totalbalance.save()
+"""

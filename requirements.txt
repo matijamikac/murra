@@ -34,7 +34,6 @@ pyflakes==1.6.0
 python-dateutil==2.6.1
 python-utils==2.2.0
 pytz==2017.3
-redis==2.10.6
 requests==2.18.4
 s3transfer==0.1.11
 six==1.11.0
@@ -43,4 +42,3 @@ vine==1.1.4
 virtualenv==15.1.0
 virtualenv-clone==0.2.6
 virtualenvwrapper-win==1.2.1
-whitenoise==3.3.1
